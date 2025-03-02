@@ -6,10 +6,47 @@
 
 body {
   height: 100vh;
+  display: flex;
+}
+
+.memory-game {
+  width: 420px;
+  height: 320px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  perspective: 1000px;
 }
 
 img {
   width: 100px;
   height: 100px;
   object-fit: cover;
+  border-radius: 5px;
+}
+
+.card {
+  position: relative;
+  width: 25%;
+  height: 33.333%;
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.card:active {
+  transform: scale(0.97);
+  transition: transform 0.2s;
+}
+.card.flip {
+  transform: rotateY(180deg);
+}
+.front,
+.back {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.front {
+  transform: rotateY(180deg);
 }
