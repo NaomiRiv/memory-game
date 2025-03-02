@@ -2,8 +2,10 @@ const cards = document.querySelectorAll(".card");
 
 let isFlippedCard = false;
 let firstCard, secondCard;
+let lockBoard = false;
 
 function flipCard() {
+  if (lockBoard) return;
   this.classList.toggle("flip");
   if (!isFlippedCard) {
     isFlippedCard = true;
@@ -16,9 +18,12 @@ function flipCard() {
       firstCard.removeEventListener("click", flipCard);
       secondCard.removeEventListener("click", flipCard);
     } else {
+      lockBoard = true;
       setTimeout(() => {
         firstCard.classList.remove("flip");
         secondCard.classList.remove("flip");
+
+        lockBoard = false;
       }, 1500);
     }
   }
