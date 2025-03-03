@@ -1,4 +1,8 @@
 const cards = document.querySelectorAll(".card");
+const memoryGame = document.querySelector(".memory-game");
+const final = document.querySelector(".final-container");
+const playAgainButton = document.querySelector("#play-again-button");
+const TotalPairs = cards.length / 2;
 
 const dolphinSound = document.getElementById("dolphinSound");
 const elephantSound = document.getElementById("elephantSound");
@@ -10,6 +14,7 @@ const squirrelSound = document.getElementById("squirrelSound");
 let hasFlippedCard = false;
 let firstCard, secondCard;
 let lockBoard = false;
+let matchedPairs = 0;
 
 function flipCard() {
   if (lockBoard) return;
@@ -25,9 +30,20 @@ function flipCard() {
     // chose two cards
     secondCard = this;
 
-    let isMatched = checkIfMatched();
-    isMatched ? (playSound(), disableCardsAfterMatched()) : unflipCards();
+    if (checkIfMatched()) {
+      playSound();
+      disableCardsAfterMatched();
+      matchedPairs++;
+      if (matchedPairs == TotalPairs) toggleFinished();
+    } else {
+      unflipCards();
+    }
   }
+}
+
+function toggleFinished() {
+  memoryGame.classList.toggle("faded");
+  final.classList.toggle("show");
 }
 
 function playSound() {
@@ -54,13 +70,14 @@ function playSound() {
 }
 
 function checkIfMatched() {
-  return (isMatched =
-    firstCard.dataset.framework == secondCard.dataset.framework);
+  return firstCard.dataset.framework == secondCard.dataset.framework;
 }
 
 function disableCardsAfterMatched() {
   firstCard.removeEventListener("click", flipCard);
+  firstCard.classList.add("disabled");
   secondCard.removeEventListener("click", flipCard);
+  secondCard.classList.add("disabled");
 
   resetBoard();
 }
@@ -81,11 +98,37 @@ function resetBoard() {
   [firstCard, secondCard] = [null, null];
 }
 
-(function shuffle() {
+function playAgain() {
+  flipAllCards();
+  enableAllCards();
+  toggleFinished();
+  resetBoard();
+  shuffle();
+  addClickEventToCards();
+}
+
+function flipAllCards() {
+  cards.forEach((card) => {
+    card.classList.toggle("flip");
+  });
+}
+
+function enableAllCards() {
+  cards.forEach((card) => {
+    card.classList.toggle("disabled");
+  });
+}
+function shuffle() {
   cards.forEach((card) => {
     let randomPos = Math.floor(Math.random() * 12);
     card.style.order = randomPos;
   });
-})();
+}
 
-cards.forEach((card) => card.addEventListener("click", flipCard));
+function addClickEventToCards() {
+  cards.forEach((card) => card.addEventListener("click", flipCard));
+}
+
+shuffle();
+addClickEventToCards();
+playAgainButton.addEventListener("click", playAgain);
