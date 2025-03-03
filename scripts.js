@@ -105,6 +105,7 @@ function playAgain() {
   resetBoard();
   shuffle();
   addClickEventToCards();
+  matchedPairs = 0;
 }
 
 function flipAllCards() {

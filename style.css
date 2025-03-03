@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: "Sour Gummy", sans-serif;
   background-color: #e0f7fa;
   background-image: linear-gradient(135deg, #9fdffd, #7ccffc);
   color: #333;
@@ -14,14 +14,14 @@ body {
 }
 
 h1 {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  font-size: 2rem;
+  font-family: "Sour Gummy", sans-serif;
+  font-size: 2.4rem;
   color: #1e90ff;
   text-align: center;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   padding: 10px;
   border-radius: 15px;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .container {
@@ -108,7 +108,7 @@ img {
 }
 
 h2 {
-  font-family: "Comic Sans MS", sans-serif;
+  font-family: "Sour Gummy", sans-serif;
   font-size: 5rem;
   color: #ff6f61;
   text-align: center;
