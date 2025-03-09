@@ -6,13 +6,15 @@ const animals = [
   "parrot",
   "squirrel",
 ];
+
 const imgsPath = "img/";
 const audioPath = "audio/";
 
 const memoryGame = document.querySelector(".memory-game");
 const final = document.querySelector(".final-container");
 const playAgainButton = document.querySelector("#play-again-button");
-const animalSoundsElement = document.getElementById("animal-sounds");
+const animalSoundsElement = document.querySelector("#animal-sounds");
+const numberOfTriesElement = document.querySelector("#number-of-tries");
 
 const TotalPairs = animals.length;
 
@@ -21,13 +23,14 @@ let firstCard, secondCard;
 let lockBoard = false;
 let matchedPairs = 0;
 let cards;
+let numberOfTries = 0;
 
 init();
 
 function init() {
   addAnimalAudioElements();
   cards = addCards();
-  shuffle();
+  //shuffle();
   addClickEventToCards();
   playAgainButton.addEventListener("click", playAgain);
 }
@@ -84,6 +87,10 @@ function addCards() {
   return document.querySelectorAll(".card");
 }
 
+function updateNumberOfTries(numberOfTries) {
+  numberOfTriesElement.innerText = numberOfTries;
+}
+
 function flipCard() {
   if (lockBoard) return;
   if (this === firstCard) return; // in case of double click
@@ -97,7 +104,7 @@ function flipCard() {
   } else {
     // chose two cards
     secondCard = this;
-
+    updateNumberOfTries(++numberOfTries);
     if (checkIfMatched()) {
       playSound();
       disableCardsAfterMatched();
@@ -157,6 +164,7 @@ function playAgain() {
   shuffle();
   addClickEventToCards();
   matchedPairs = 0;
+  updateNumberOfTries(0);
 }
 
 function flipAllCards() {

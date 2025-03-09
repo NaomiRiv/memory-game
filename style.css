@@ -84,6 +84,11 @@ img {
   transform: rotateY(180deg);
 }
 
+.current-game-summary {
+  text-align: center;
+  color: #3d587a;
+}
+
 .memory-game.faded {
   opacity: 0.2;
 }
@@ -140,6 +145,6 @@ button:focus {
 
 @media screen and (max-width: 560px) {
   .memory-game {
-    height: 74%;
+    height: 70%;
   }
 }
