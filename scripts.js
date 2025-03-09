@@ -16,42 +16,73 @@ const animalSoundsElement = document.getElementById("animal-sounds");
 
 const TotalPairs = animals.length;
 
-(function addAnimalAudioElements() {
-  animals.forEach((animalName) => {
-    const el = document.createElement("audio");
-    el.setAttribute("src", `${audioPath}${animalName}.mp3`);
-    el.setAttribute("preload", "auto");
-    el.setAttribute("id", animalName + "Sound");
-    animalSoundsElement.appendChild(el);
-  });
-})();
-
-(function addCards() {
-  animals.forEach((animalName) => {
-    for (let i = 0; i < 2; i++) {
-      const cardEl = document.createElement("div");
-      const frontImgEl = document.createElement("img");
-      const backImgEl = document.createElement("img");
-      cardEl.classList.add("card");
-      cardEl.setAttribute("data-framework", animalName);
-      frontImgEl.classList.add("front");
-      frontImgEl.setAttribute("src", `${imgsPath}${animalName}.jpg`);
-      frontImgEl.setAttribute("alt", animalName);
-      backImgEl.classList.add("back");
-      backImgEl.setAttribute("src", `${imgsPath}back.jpg`);
-      cardEl.appendChild(frontImgEl);
-      cardEl.appendChild(backImgEl);
-      memoryGame.appendChild(cardEl);
-    }
-  });
-})();
-
-const cards = document.querySelectorAll(".card");
-
 let hasFlippedCard = false;
 let firstCard, secondCard;
 let lockBoard = false;
 let matchedPairs = 0;
+let cards;
+
+init();
+
+function init() {
+  addAnimalAudioElements();
+  cards = addCards();
+  shuffle();
+  addClickEventToCards();
+  playAgainButton.addEventListener("click", playAgain);
+}
+
+function createAnimalAudioElement(animalName) {
+  const audioElement = document.createElement("audio");
+  audioElement.setAttribute("src", `${audioPath}${animalName}.mp3`);
+  audioElement.setAttribute("preload", "auto");
+  audioElement.setAttribute("id", `${animalName}Sound`);
+  return audioElement;
+}
+
+function addAnimalAudioElements() {
+  animals.forEach((animalName) => {
+    const audioElement = createAnimalAudioElement(animalName);
+    animalSoundsElement.appendChild(audioElement);
+  });
+}
+
+function createCardElement(animalName) {
+  const cardEl = document.createElement("div");
+  cardEl.classList.add("card");
+  cardEl.setAttribute("data-framework", animalName);
+
+  const frontImgEl = createImageElement(
+    `${imgsPath}${animalName}.jpg`,
+    animalName,
+    "front"
+  );
+  const backImgEl = createImageElement(`${imgsPath}back.jpg`, "back", "back");
+
+  cardEl.appendChild(frontImgEl);
+  cardEl.appendChild(backImgEl);
+
+  return cardEl;
+}
+
+function createImageElement(src, alt, className) {
+  const imgEl = document.createElement("img");
+  imgEl.classList.add(className);
+  imgEl.setAttribute("src", src);
+  imgEl.setAttribute("alt", alt);
+
+  return imgEl;
+}
+
+function addCards() {
+  animals.forEach((animalName) => {
+    for (let i = 0; i < 2; i++) {
+      const cardEl = createCardElement(animalName);
+      memoryGame.appendChild(cardEl);
+    }
+  });
+  return document.querySelectorAll(".card");
+}
 
 function flipCard() {
   if (lockBoard) return;
@@ -148,7 +179,3 @@ function shuffle() {
 function addClickEventToCards() {
   cards.forEach((card) => card.addEventListener("click", flipCard));
 }
-
-//shuffle();
-addClickEventToCards();
-playAgainButton.addEventListener("click", playAgain);
