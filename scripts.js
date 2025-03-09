@@ -4,12 +4,24 @@ const final = document.querySelector(".final-container");
 const playAgainButton = document.querySelector("#play-again-button");
 const TotalPairs = cards.length / 2;
 
-const dolphinSound = document.getElementById("dolphinSound");
-const elephantSound = document.getElementById("elephantSound");
-const giraffeSound = document.getElementById("giraffeSound");
-const horseSound = document.getElementById("horseSound");
-const parrotSound = document.getElementById("parrotSound");
-const squirrelSound = document.getElementById("squirrelSound");
+const animalSoundsElement = document.getElementById("animal-sounds");
+
+const animals = [
+  "dolphin",
+  "elephant",
+  "giraffe",
+  "horse",
+  "parrot",
+  "squirrel",
+];
+
+animals.forEach((animalName) => {
+  const el = document.createElement("audio");
+  el.setAttribute("src", "audio/" + animalName + ".mp3");
+  el.setAttribute("preload", "auto");
+  el.setAttribute("id", animalName + "Sound");
+  animalSoundsElement.appendChild(el);
+});
 
 let hasFlippedCard = false;
 let firstCard, secondCard;
@@ -47,26 +59,8 @@ function toggleFinished() {
 }
 
 function playSound() {
-  switch (firstCard.dataset.framework) {
-    case "dolphin":
-      dolphinSound.play();
-      break;
-    case "elephant":
-      elephantSound.play();
-      break;
-    case "giraffe":
-      giraffeSound.play();
-      break;
-    case "horse":
-      horseSound.play();
-      break;
-    case "parrot":
-      parrotSound.play();
-      break;
-    case "squirrel":
-      squirrelSound.play();
-      break;
-  }
+  const animalName = firstCard.dataset.framework;
+  document.getElementById(animalName + "Sound").play();
 }
 
 function checkIfMatched() {
@@ -130,6 +124,6 @@ function addClickEventToCards() {
   cards.forEach((card) => card.addEventListener("click", flipCard));
 }
 
-shuffle();
+//shuffle();
 addClickEventToCards();
 playAgainButton.addEventListener("click", playAgain);
