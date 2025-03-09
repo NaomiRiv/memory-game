@@ -116,7 +116,8 @@ function toggleFinished() {
 
 function playSound() {
   const animalName = firstCard.dataset.framework;
-  document.getElementById(animalName + "Sound").play();
+  const soundEl = document.getElementById(`${animalName}Sound`);
+  if (soundEl) soundEl.play();
 }
 
 function checkIfMatched() {
