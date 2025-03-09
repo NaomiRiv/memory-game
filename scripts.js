@@ -30,7 +30,7 @@ init();
 function init() {
   addAnimalAudioElements();
   cards = addCards();
-  //shuffle();
+  shuffle();
   addClickEventToCards();
   playAgainButton.addEventListener("click", playAgain);
 }
