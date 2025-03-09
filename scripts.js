@@ -1,11 +1,3 @@
-const cards = document.querySelectorAll(".card");
-const memoryGame = document.querySelector(".memory-game");
-const final = document.querySelector(".final-container");
-const playAgainButton = document.querySelector("#play-again-button");
-const TotalPairs = cards.length / 2;
-
-const animalSoundsElement = document.getElementById("animal-sounds");
-
 const animals = [
   "dolphin",
   "elephant",
@@ -14,14 +6,47 @@ const animals = [
   "parrot",
   "squirrel",
 ];
+const imgsPath = "img/";
+const audioPath = "audio/";
 
-animals.forEach((animalName) => {
-  const el = document.createElement("audio");
-  el.setAttribute("src", "audio/" + animalName + ".mp3");
-  el.setAttribute("preload", "auto");
-  el.setAttribute("id", animalName + "Sound");
-  animalSoundsElement.appendChild(el);
-});
+const memoryGame = document.querySelector(".memory-game");
+const final = document.querySelector(".final-container");
+const playAgainButton = document.querySelector("#play-again-button");
+const animalSoundsElement = document.getElementById("animal-sounds");
+
+const TotalPairs = animals.length;
+
+(function addAnimalAudioElements() {
+  animals.forEach((animalName) => {
+    const el = document.createElement("audio");
+    el.setAttribute("src", `${audioPath}${animalName}.mp3`);
+    el.setAttribute("preload", "auto");
+    el.setAttribute("id", animalName + "Sound");
+    animalSoundsElement.appendChild(el);
+  });
+})();
+
+(function addCards() {
+  animals.forEach((animalName) => {
+    for (let i = 0; i < 2; i++) {
+      const cardEl = document.createElement("div");
+      const frontImgEl = document.createElement("img");
+      const backImgEl = document.createElement("img");
+      cardEl.classList.add("card");
+      cardEl.setAttribute("data-framework", animalName);
+      frontImgEl.classList.add("front");
+      frontImgEl.setAttribute("src", `${imgsPath}${animalName}.jpg`);
+      frontImgEl.setAttribute("alt", animalName);
+      backImgEl.classList.add("back");
+      backImgEl.setAttribute("src", `${imgsPath}back.jpg`);
+      cardEl.appendChild(frontImgEl);
+      cardEl.appendChild(backImgEl);
+      memoryGame.appendChild(cardEl);
+    }
+  });
+})();
+
+const cards = document.querySelectorAll(".card");
 
 let hasFlippedCard = false;
 let firstCard, secondCard;
