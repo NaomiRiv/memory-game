@@ -40,7 +40,7 @@ function init() {
   cards = addCards();
   //shuffle();
   addClickEventToCards();
-  //playAgainButton.addEventListener("click", playAgain);
+  playAgainButton.addEventListener("click", playAgain);
   textInput.addEventListener("keydown", function (event) {
     if (event.key == "Enter") {
       handleNewResult();

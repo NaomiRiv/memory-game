@@ -129,7 +129,7 @@ h2 {
 
 button {
   font-family: inherit;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   background-color: #5dbb63;
   color: white;
   padding: 5px 15px;
@@ -141,7 +141,7 @@ button {
 
 button:hover {
   background-color: #4a9e4a;
-  transform: scale(1.1);
+  transform: scale(1.02);
 }
 
 button:focus {
