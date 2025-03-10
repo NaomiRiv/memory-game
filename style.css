@@ -24,6 +24,10 @@ h1 {
   margin: 10px 0;
 }
 
+h3 {
+  text-align: center;
+}
+
 .container {
   height: 580px;
   width: 580px;
@@ -125,10 +129,10 @@ h2 {
 
 button {
   font-family: inherit;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   background-color: #5dbb63;
   color: white;
-  padding: 10px 25px;
+  padding: 5px 15px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -189,6 +193,18 @@ tr:hover {
   border-radius: 10px;
 }
 .leader-board-table {
+}
+
+input[type="text"] {
+  width: 200px;
+  padding: 6px;
+  font-size: 16px;
+  font-family: "Sour Gummy", sans-serif;
+  border-radius: 10px;
+  border: 2px solid #ff7f50;
+  margin: 18px;
+  background-color: #fdd8cae1;
+  transition: all 0.3s ease;
 }
 
 @media screen and (max-width: 560px) {

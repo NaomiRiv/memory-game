@@ -16,10 +16,13 @@ const memoryGame = document.querySelector(".memory-game");
 const final = document.querySelector(".final-container");
 const playAgainButton = document.querySelector("#play-again-button");
 const animalSoundsElement = document.querySelector("#animal-sounds");
-const numberOfTriesElement = document.querySelector("#number-of-tries");
+const numberOfTriesElements = document.querySelectorAll(".number-of-tries");
 const leaderBoardBodyElement = document.querySelector(
   "#leader-board-table-body"
 );
+const textInput = document.querySelector("#name");
+const submitButton = document.querySelector("#submit-button");
+
 const TotalPairs = animals.length;
 
 let hasFlippedCard = false;
@@ -32,11 +35,29 @@ let numberOfTries = 0;
 init();
 
 function init() {
+  renderNumberOfTries();
   addAnimalAudioElements();
   cards = addCards();
-  shuffle();
+  //shuffle();
   addClickEventToCards();
-  playAgainButton.addEventListener("click", playAgain);
+  //playAgainButton.addEventListener("click", playAgain);
+  textInput.addEventListener("keydown", function (event) {
+    if (event.key == "Enter") {
+      handleNewResult();
+      event.preventDefault();
+    }
+  });
+  submitButton.addEventListener("click", handleNewResult);
+}
+
+function handleNewResult() {
+  console.log(textInput.value);
+}
+
+function renderNumberOfTries() {
+  numberOfTriesElements.forEach((tries) => {
+    tries.innerText = numberOfTries;
+  });
 }
 
 function createAnimalAudioElement(animalName) {
@@ -91,8 +112,9 @@ function addCards() {
   return document.querySelectorAll(".card");
 }
 
-function updateNumberOfTries(numberOfTries) {
-  numberOfTriesElement.innerText = numberOfTries;
+function updateNumberOfTries(triesNum) {
+  numberOfTries = triesNum;
+  renderNumberOfTries();
 }
 
 function flipCard() {
