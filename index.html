@@ -14,15 +14,31 @@
   </head>
   <body>
     <div id="animal-sounds"></div>
-    <div class="container">
+    <div class="container" hidden>
       <h1>Animals Memory Card Game</h1>
       <section class="memory-game"></section>
-      <h3 class="current-game-summary">- Number of tries: <span id="number-of-tries">0</span> -</h2>
+      <h3 class="current-game-summary">
+        - Number of tries: <span id="number-of-tries">0</span> -
+      </h3>
     </div>
     <div class="final-container">
       <div class="final-content">
         <h2>Hooray!</h2>
         <button id="play-again-button">Play Again</button>
+      </div>
+    </div>
+    <div class="container container-flex">
+      <div class="leader-board-container">
+        <table id="leader-board-table">
+          <thead>
+            <tr>
+              <th>Place</th>
+              <th>Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="leader-board-table-body"></tbody>
+        </table>
       </div>
     </div>
     <script src="scripts.js"></script>

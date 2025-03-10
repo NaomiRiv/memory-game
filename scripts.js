@@ -7,6 +7,8 @@ const animals = [
   "squirrel",
 ];
 
+const leaderBoard = [];
+
 const imgsPath = "img/";
 const audioPath = "audio/";
 
@@ -15,7 +17,9 @@ const final = document.querySelector(".final-container");
 const playAgainButton = document.querySelector("#play-again-button");
 const animalSoundsElement = document.querySelector("#animal-sounds");
 const numberOfTriesElement = document.querySelector("#number-of-tries");
-
+const leaderBoardBodyElement = document.querySelector(
+  "#leader-board-table-body"
+);
 const TotalPairs = animals.length;
 
 let hasFlippedCard = false;
@@ -187,4 +191,47 @@ function shuffle() {
 
 function addClickEventToCards() {
   cards.forEach((card) => card.addEventListener("click", flipCard));
+}
+
+function addToLeaderBoardByIndex(newPlayer, index) {
+  index == -1
+    ? leaderBoard.push(newPlayer)
+    : leaderBoard.splice(index, 0, newPlayer);
+}
+
+function addScoreToLeaderBoard(name, score) {
+  const newPlayer = { name: name, score: score };
+  let leaderBoardLen = leaderBoard.length;
+  let index = leaderBoard.findIndex((player) => player.score < newPlayer.score);
+
+  if (leaderBoardLen < 3) {
+    addToLeaderBoardByIndex(newPlayer, index);
+  } else {
+    let minScore = leaderBoard[leaderBoardLen - 1].score;
+    if (newPlayer.score > minScore) {
+      leaderBoard.pop();
+      index = leaderBoard.findIndex((player) => player.score < newPlayer.score);
+      addToLeaderBoardByIndex(newPlayer, index);
+    }
+  }
+}
+
+function renderLeaderBoard() {
+  leaderBoardBodyElement.innerHTML = "";
+  for (i = 0; i < leaderBoard.length; i++) {
+    const rowEl = document.createElement("tr");
+    const placeEl = document.createElement("td");
+    const nameEl = document.createElement("td");
+    const scoreEl = document.createElement("td");
+
+    placeEl.innerText = i + 1;
+    nameEl.innerText = leaderBoard[i].name;
+    scoreEl.innerText = leaderBoard[i].score;
+
+    rowEl.appendChild(placeEl);
+    rowEl.appendChild(nameEl);
+    rowEl.appendChild(scoreEl);
+
+    leaderBoardBodyElement.appendChild(rowEl);
+  }
 }
