@@ -100,7 +100,6 @@ img {
 }
 
 .final-container {
-  display: none;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -150,19 +149,18 @@ button:focus {
 }
 
 table {
-  width: 100%;
-  max-width: 600px;
+  width: 400px;
   margin: 0 auto;
-  background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-collapse: collapse;
 }
+
 th,
 td {
-  padding: 8px;
+  padding: 6px;
   text-align: center;
-  font-size: 26px;
+  font-size: 20px;
   border: 2px solid #f0f0f0;
 }
 th {
@@ -171,7 +169,6 @@ th {
 }
 td {
   background-color: #f2f2f2;
-  border-radius: 10px;
   color: #333;
 }
 tr:hover {
@@ -179,20 +176,14 @@ tr:hover {
   cursor: pointer;
 }
 
-.leader-board-container {
-  width: 80%;
+.leaderboard-container {
+  width: 100%;
   height: 100%;
-  overflow-y: auto;
-  border: 2px solid red;
-}
-
-.container-flex {
   display: flex;
-  justify-content: center;
-  padding: 30px 0;
-  border-radius: 10px;
-}
-.leader-board-table {
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 0;
 }
 
 input[type="text"] {
@@ -205,6 +196,10 @@ input[type="text"] {
   margin: 18px;
   background-color: #fdd8cae1;
   transition: all 0.3s ease;
+}
+
+.hidden {
+  display: none;
 }
 
 @media screen and (max-width: 560px) {

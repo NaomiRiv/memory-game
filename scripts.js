@@ -12,13 +12,21 @@ const leaderBoard = [];
 const imgsPath = "img/";
 const audioPath = "audio/";
 
+const toShuffle = true; // for debug
+const leaderBoardMaxSize = 3;
 const memoryGame = document.querySelector(".memory-game");
 const final = document.querySelector(".final-container");
+const finalContentEl = document.querySelector(".final-content");
 const playAgainButton = document.querySelector("#play-again-button");
+const playAgainButtonTable = document.querySelector("#play-again-button-table");
 const animalSoundsElement = document.querySelector("#animal-sounds");
 const numberOfTriesElements = document.querySelectorAll(".number-of-tries");
 const leaderBoardBodyElement = document.querySelector(
   "#leader-board-table-body"
+);
+const leaderBoardEls = document.querySelectorAll(".leadboard-qualified");
+const leaderBoardContainerElement = document.querySelector(
+  ".leaderboard-container"
 );
 const textInput = document.querySelector("#name");
 const submitButton = document.querySelector("#submit-button");
@@ -38,9 +46,10 @@ function init() {
   renderNumberOfTries();
   addAnimalAudioElements();
   cards = addCards();
-  //shuffle();
+  shuffle();
   addClickEventToCards();
   playAgainButton.addEventListener("click", playAgain);
+  playAgainButtonTable.addEventListener("click", playAgainTable);
   textInput.addEventListener("keydown", function (event) {
     if (event.key == "Enter") {
       handleNewResult();
@@ -51,7 +60,9 @@ function init() {
 }
 
 function handleNewResult() {
-  console.log(textInput.value);
+  addScoreToLeaderBoard(textInput.value, numberOfTries);
+  renderLeaderBoard();
+  toggleFinalContent();
 }
 
 function renderNumberOfTries() {
@@ -135,11 +146,22 @@ function flipCard() {
       playSound();
       disableCardsAfterMatched();
       matchedPairs++;
-      if (matchedPairs == TotalPairs) toggleFinished();
+      if (matchedPairs == TotalPairs) handleFinished();
     } else {
       unflipCards();
     }
   }
+}
+
+function toggleLeaderBoardSubmission() {
+  leaderBoardEls.forEach((el) => {
+    el.classList.toggle("hidden");
+  });
+}
+
+function handleFinished() {
+  if (checkIfMadeItToLeadBoard()) toggleLeaderBoardSubmission();
+  toggleFinished();
 }
 
 function toggleFinished() {
@@ -182,15 +204,34 @@ function resetBoard() {
   [firstCard, secondCard] = [null, null];
 }
 
+function toggleFinalContent() {
+  finalContentEl.classList.toggle("hidden");
+  leaderBoardContainerElement.classList.toggle("hidden");
+}
+
+function addHidden(className) {
+  els = document.querySelectorAll(`.${className}`);
+  els.forEach((el) => {
+    el.classList.add("hidden");
+  });
+}
+
 function playAgain() {
+  toggleLeaderBoardSubmission();
   flipAllCards();
   enableAllCards();
   toggleFinished();
   resetBoard();
   shuffle();
   addClickEventToCards();
+  addHidden("leadboard-qualified");
   matchedPairs = 0;
   updateNumberOfTries(0);
+}
+
+function playAgainTable() {
+  toggleFinalContent();
+  playAgain();
 }
 
 function flipAllCards() {
@@ -205,6 +246,7 @@ function enableAllCards() {
   });
 }
 function shuffle() {
+  if (!toShuffle) return;
   cards.forEach((card) => {
     let randomPos = Math.floor(Math.random() * 12);
     card.style.order = randomPos;
@@ -226,7 +268,7 @@ function addScoreToLeaderBoard(name, score) {
   let leaderBoardLen = leaderBoard.length;
   let index = leaderBoard.findIndex((player) => player.score < newPlayer.score);
 
-  if (leaderBoardLen < 3) {
+  if (leaderBoardLen < leaderBoardMaxSize) {
     addToLeaderBoardByIndex(newPlayer, index);
   } else {
     let minScore = leaderBoard[leaderBoardLen - 1].score;
@@ -256,4 +298,11 @@ function renderLeaderBoard() {
 
     leaderBoardBodyElement.appendChild(rowEl);
   }
+}
+
+function checkIfMadeItToLeadBoard() {
+  let leaderBoardLen = leaderBoard.length;
+  if (leaderBoardLen == 0 || leaderBoardLen < leaderBoardMaxSize) return true;
+  let minScore = leaderBoard[leaderBoardLen - 1];
+  return numberOfTries > minScore;
 }

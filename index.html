@@ -21,23 +21,42 @@
         - Number of tries: <span class="number-of-tries"></span> -
       </h3>
     </div>
-    <div class="final-container">
+    <div class="final-container" hidden>
       <div class="final-content">
         <h2>Hooray!</h2>
         <h3>
           <p>You made it in <span class="number-of-tries"></span> guesses</p>
-          <p>Enter your name:</p>
+          <p class="leadboard-qualified hidden">Enter your name</p>
+          <p class="leadboard-qualified hidden">
+            to submit your result to leaderboard:
+          </p>
         </h3>
         <input
           type="text"
           id="name"
           name="name"
           placeholder="Enter your name"
+          class="leadboard-qualified hidden"
         />
         <div class="final-buttons">
-          <button id="submit-button">Submit</button>
+          <button id="submit-button" class="leadboard-qualified hidden">
+            Submit
+          </button>
           <button id="play-again-button">Play Again</button>
         </div>
+      </div>
+      <div class="leaderboard-container hidden">
+        <table>
+          <thead>
+            <tr>
+              <th>Place</th>
+              <th>Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="leader-board-table-body"></tbody>
+        </table>
+        <button id="play-again-button-table">Play Again</button>
       </div>
     </div>
 
