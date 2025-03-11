@@ -12,7 +12,7 @@ const leaderBoard = [];
 const imgsPath = "img/";
 const audioPath = "audio/";
 
-const toShuffle = true; // for debug
+const toShuffle = false; // for debug
 const leaderBoardMaxSize = 3;
 const memoryGame = document.querySelector(".memory-game");
 const final = document.querySelector(".final-container");
@@ -266,7 +266,7 @@ function addToLeaderBoardByIndex(newPlayer, index) {
 function addScoreToLeaderBoard(name, score) {
   const newPlayer = { name: name, score: score };
   let leaderBoardLen = leaderBoard.length;
-  let index = leaderBoard.findIndex((player) => player.score < newPlayer.score);
+  let index = leaderBoard.findIndex((player) => player.score > newPlayer.score);
 
   if (leaderBoardLen < leaderBoardMaxSize) {
     addToLeaderBoardByIndex(newPlayer, index);
@@ -303,6 +303,12 @@ function renderLeaderBoard() {
 function checkIfMadeItToLeadBoard() {
   let leaderBoardLen = leaderBoard.length;
   if (leaderBoardLen == 0 || leaderBoardLen < leaderBoardMaxSize) return true;
-  let minScore = leaderBoard[leaderBoardLen - 1];
-  return numberOfTries > minScore;
+  let maxLeadboardScore = leaderBoard[leaderBoardLen - 1];
+  let minLeadboardScore = leaderBoard[0];
+  if (
+    minLeadboardScore == maxLeadboardScore &&
+    numberOfTries == minLeadboardScore
+  )
+    return false;
+  return numberOfTries <= maxLeadboardScore;
 }
