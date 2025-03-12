@@ -12,7 +12,7 @@ const leaderBoard = [];
 const imgsPath = "img/";
 const audioPath = "audio/";
 
-const toShuffle = false; // for debug
+const toShuffle = true; // for debug
 const leaderBoardMaxSize = 3;
 const memoryGame = document.querySelector(".memory-game");
 const final = document.querySelector(".final-container");
